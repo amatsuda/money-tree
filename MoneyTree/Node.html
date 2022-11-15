@@ -468,6 +468,28 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#derive_parent_node-instance_method" title="#derive_parent_node (instance method)">#<strong>derive_parent_node</strong>(parent_key)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#derive_private_key-instance_method" title="#derive_private_key (instance method)">#<strong>derive_private_key</strong>(i = 0)  &#x21d2; Object </a>
     
 
@@ -1464,12 +1486,12 @@
       <pre class="lines">
 
 
-234
-235
-236</pre>
+245
+246
+247</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 234</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 245</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_chain_code_hex'>chain_code_hex</span>
   <span class='id identifier rubyid_int_to_hex'>int_to_hex</span> <span class='id identifier rubyid_chain_code'>chain_code</span><span class='comma'>,</span> <span class='int'>64</span>
@@ -1503,6 +1525,50 @@
 
 <span class='kw'>def</span> <span class='id identifier rubyid_depth_hex'>depth_hex</span><span class='lparen'>(</span><span class='id identifier rubyid_depth'>depth</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_depth'>depth</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='lparen'>(</span><span class='int'>16</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_rjust'>rjust</span><span class='lparen'>(</span><span class='int'>2</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="derive_parent_node-instance_method">
+  
+    #<strong>derive_parent_node</strong>(parent_key)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 89</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_derive_parent_node'>derive_parent_node</span><span class='lparen'>(</span><span class='id identifier rubyid_parent_key'>parent_key</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_parent_key'>parent_key</span><span class='period'>.</span><span class='id identifier rubyid_public_key'>public_key</span><span class='period'>.</span><span class='id identifier rubyid_to_bytes'>to_bytes</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_i_as_bytes'>i_as_bytes</span><span class='lparen'>(</span><span class='id identifier rubyid_index'>index</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='id identifier rubyid_hmac_sha512'>hmac_sha512</span> <span class='id identifier rubyid_hex_to_bytes'>hex_to_bytes</span><span class='lparen'>(</span><span class='id identifier rubyid_parent_key'>parent_key</span><span class='period'>.</span><span class='id identifier rubyid_chain_code_hex'>chain_code_hex</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span>
+  <span class='id identifier rubyid_priv'>priv</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_private_key'>private_key</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>-</span> <span class='id identifier rubyid_left_from_hash'>left_from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>%</span> <span class='const'><span class='object_link'><a href="../MoneyTree.html" title="MoneyTree (module)">MoneyTree</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Key.html" title="MoneyTree::Key (class)">Key</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Key.html#ORDER-constant" title="MoneyTree::Key::ORDER (constant)">ORDER</a></span></span>
+  <span class='const'><span class='object_link'><a href="../MoneyTree.html" title="MoneyTree (module)">MoneyTree</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="MoneyTree::Node (class)">Node</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="MoneyTree::Node#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>depth:</span> <span class='id identifier rubyid_parent_key'>parent_key</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span><span class='comma'>,</span>
+                      <span class='label'>index:</span> <span class='id identifier rubyid_parent_key'>parent_key</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='comma'>,</span>
+                      <span class='label'>private_key:</span> <span class='const'><span class='object_link'><a href="../MoneyTree.html" title="MoneyTree (module)">MoneyTree</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="PrivateKey.html" title="MoneyTree::PrivateKey (class)">PrivateKey</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="PrivateKey.html#initialize-instance_method" title="MoneyTree::PrivateKey#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>key:</span> <span class='id identifier rubyid_priv'>priv</span><span class='rparen'>)</span><span class='comma'>,</span>
+                      <span class='label'>public_key:</span> <span class='id identifier rubyid_parent_key'>parent_key</span><span class='period'>.</span><span class='id identifier rubyid_public_key'>public_key</span><span class='comma'>,</span>
+                      <span class='label'>chain_code:</span> <span class='id identifier rubyid_parent_key'>parent_key</span><span class='period'>.</span><span class='id identifier rubyid_chain_code'>chain_code</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1612,26 +1678,26 @@
       <pre class="lines">
 
 
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
 100
 101
 102
 103
 104
-105</pre>
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 89</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 100</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_derive_public_key'>derive_public_key</span><span class='lparen'>(</span><span class='id identifier rubyid_i'>i</span> <span class='op'>=</span> <span class='int'>0</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Node/PrivatePublicMismatch.html" title="MoneyTree::Node::PrivatePublicMismatch (class)">PrivatePublicMismatch</a></span></span> <span class='kw'>if</span> <span class='id identifier rubyid_i'>i</span> <span class='op'>&gt;=</span> <span class='const'><span class='object_link'><a href="#PRIVATE_RANGE_LIMIT-constant" title="MoneyTree::Node::PRIVATE_RANGE_LIMIT (constant)">PRIVATE_RANGE_LIMIT</a></span></span>
@@ -1790,12 +1856,12 @@
       <pre class="lines">
 
 
-107
-108
-109</pre>
+118
+119
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 118</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_left_from_hash'>left_from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bytes_to_int'>bytes_to_int</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_bytes'>bytes</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>..</span><span class='int'>31</span><span class='rbracket'>]</span>
@@ -1842,17 +1908,17 @@
       <pre class="lines">
 
 
-215
-216
-217
-218
-219
-220
-221
-222</pre>
+226
+227
+228
+229
+230
+231
+232
+233</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 215</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 226</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_negative?'>negative?</span><span class='lparen'>(</span><span class='id identifier rubyid_path_part'>path_part</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_relative_index'>relative_index</span> <span class='op'>=</span> <span class='id identifier rubyid_path_part'>path_part</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
@@ -1907,17 +1973,6 @@ the key public.
       <pre class="lines">
 
 
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
 203
 204
 205
@@ -1928,10 +1983,21 @@ the key public.
 210
 211
 212
-213</pre>
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 192</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 203</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_node_for_path'>node_for_path</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_force_public'>force_public</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>4</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.pub</span><span class='tstring_end'>&quot;</span></span>
@@ -1975,16 +2041,16 @@ the key public.
       <pre class="lines">
 
 
-140
-141
-142
-143
-144
-145
-146</pre>
+151
+152
+153
+154
+155
+156
+157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 140</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 151</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parent_fingerprint'>parent_fingerprint</span>
   <span class='kw'>if</span> <span class='ivar'>@parent_fingerprint</span>
@@ -2013,14 +2079,14 @@ the key public.
       <pre class="lines">
 
 
-224
-225
-226
-227
-228</pre>
+235
+236
+237
+238
+239</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 224</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 235</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_index'>parse_index</span><span class='lparen'>(</span><span class='id identifier rubyid_path_part'>path_part</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_index'>index</span> <span class='op'>=</span> <span class='id identifier rubyid_path_part'>path_part</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
@@ -2107,12 +2173,12 @@ the key public.
       <pre class="lines">
 
 
-111
-112
-113</pre>
+122
+123
+124</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 122</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_right_from_hash'>right_from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bytes_to_int'>bytes_to_int</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_bytes'>bytes</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='lbracket'>[</span><span class='int'>32</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span>
@@ -2137,12 +2203,12 @@ the key public.
       <pre class="lines">
 
 
-230
-231
-232</pre>
+241
+242
+243</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 230</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 241</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_strip_private_info!'>strip_private_info!</span>
   <span class='ivar'>@private_key</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -2167,26 +2233,26 @@ the key public.
       <pre class="lines">
 
 
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
 174
 175
 176
 177
 178
-179</pre>
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 163</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 174</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_subnode'>subnode</span><span class='lparen'>(</span><span class='id identifier rubyid_i'>i</span> <span class='op'>=</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_private_key'>private_key</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -2225,13 +2291,13 @@ the key public.
       <pre class="lines">
 
 
-148
-149
-150
-151</pre>
+159
+160
+161
+162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 148</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 159</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_address'>to_address</span><span class='lparen'>(</span><span class='id identifier rubyid_compressed'>compressed</span> <span class='op'>=</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>network:</span> <span class='symbol'>:bitcoin</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_address'>address</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../MoneyTree.html#NETWORKS-constant" title="MoneyTree::NETWORKS (constant)">NETWORKS</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_network'>network</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:address_version</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_to_identifier'>to_identifier</span><span class='lparen'>(</span><span class='id identifier rubyid_compressed'>compressed</span><span class='rparen'>)</span>
@@ -2257,14 +2323,14 @@ the key public.
       <pre class="lines">
 
 
-157
-158
-159
-160
-161</pre>
+168
+169
+170
+171
+172</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 168</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_bech32_address'>to_bech32_address</span><span class='lparen'>(</span><span class='label'>network:</span> <span class='symbol'>:bitcoin</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_hrp'>hrp</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../MoneyTree.html#NETWORKS-constant" title="MoneyTree::NETWORKS (constant)">NETWORKS</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_network'>network</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:human_readable_part</span><span class='rbracket'>]</span>
@@ -2313,13 +2379,13 @@ the key public.
       <pre class="lines">
 
 
-126
-127
-128
-129</pre>
+137
+138
+139
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 137</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_bip32'>to_bip32</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='symbol'>:public</span><span class='comma'>,</span> <span class='label'>network:</span> <span class='symbol'>:bitcoin</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Node/PrivatePublicMismatch.html" title="MoneyTree::Node::PrivatePublicMismatch (class)">PrivatePublicMismatch</a></span></span> <span class='kw'>if</span> <span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='op'>==</span> <span class='symbol'>:private</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_private_key'>private_key</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -2345,12 +2411,12 @@ the key public.
       <pre class="lines">
 
 
-136
-137
-138</pre>
+147
+148
+149</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_fingerprint'>to_fingerprint</span>
   <span class='id identifier rubyid_public_key'>public_key</span><span class='period'>.</span><span class='id identifier rubyid_compressed'>compressed</span><span class='period'>.</span><span class='id identifier rubyid_to_fingerprint'>to_fingerprint</span>
@@ -2375,13 +2441,13 @@ the key public.
       <pre class="lines">
 
 
-131
-132
-133
-134</pre>
+142
+143
+144
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 131</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 142</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_identifier'>to_identifier</span><span class='lparen'>(</span><span class='id identifier rubyid_compressed'>compressed</span> <span class='op'>=</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='id identifier rubyid_compressed'>compressed</span> <span class='op'>?</span> <span class='id identifier rubyid_public_key'>public_key</span><span class='period'>.</span><span class='id identifier rubyid_compressed'>compressed</span> <span class='op'>:</span> <span class='id identifier rubyid_public_key'>public_key</span><span class='period'>.</span><span class='id identifier rubyid_uncompressed'>uncompressed</span>
@@ -2407,12 +2473,12 @@ the key public.
       <pre class="lines">
 
 
-153
-154
-155</pre>
+164
+165
+166</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 164</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_p2wpkh_p2sh'>to_p2wpkh_p2sh</span><span class='lparen'>(</span><span class='label'>network:</span> <span class='symbol'>:bitcoin</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_public_key'>public_key</span><span class='period'>.</span><span class='id identifier rubyid_to_p2wpkh_p2sh'>to_p2wpkh_p2sh</span><span class='lparen'>(</span><span class='label'>network:</span> <span class='id identifier rubyid_network'>network</span><span class='rparen'>)</span>
@@ -2459,19 +2525,19 @@ the key public.
       <pre class="lines">
 
 
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124</pre>
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/node.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_serialized_hex'>to_serialized_hex</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='symbol'>:public</span><span class='comma'>,</span> <span class='label'>network:</span> <span class='symbol'>:bitcoin</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Node/PrivatePublicMismatch.html" title="MoneyTree::Node::PrivatePublicMismatch (class)">PrivatePublicMismatch</a></span></span> <span class='kw'>if</span> <span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='op'>==</span> <span class='symbol'>:private</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_private_key'>private_key</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -2493,7 +2559,7 @@ the key public.
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 15 09:42:22 2022 by
+  Generated on Tue Nov 15 09:59:05 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

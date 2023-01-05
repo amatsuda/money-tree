@@ -202,6 +202,28 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#data_sequence-instance_method" title="#data_sequence (instance method)">#<strong>data_sequence</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#from_base64-instance_method" title="#from_base64 (instance method)">#<strong>from_base64</strong>(base64_key = raw_key)  &#x21d2; Object </a>
     
 
@@ -664,21 +686,19 @@
 47
 48
 49
-50
-51</pre>
+50</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@options</span> <span class='op'>=</span> <span class='id identifier rubyid_opts'>opts</span>
-  <span class='ivar'>@ec_key</span> <span class='op'>=</span> <span class='const'>PKey</span><span class='op'>::</span><span class='const'>EC</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='const'><span class='object_link'><a href="Key.html#GROUP_NAME-constant" title="MoneyTree::Key::GROUP_NAME (constant)">GROUP_NAME</a></span></span>
+  <span class='id identifier rubyid_generate'>generate</span>
   <span class='kw'>if</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:key</span><span class='rbracket'>]</span>
     <span class='ivar'>@raw_key</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:key</span><span class='rbracket'>]</span>
     <span class='ivar'>@key</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_raw_key'>parse_raw_key</span>
     <span class='id identifier rubyid_import'>import</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_generate'>generate</span>
     <span class='ivar'>@key</span> <span class='op'>=</span> <span class='id identifier rubyid_to_hex'>to_hex</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -731,12 +751,12 @@
       <pre class="lines">
 
 
-116
-117
-118</pre>
+123
+124
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 123</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_base64_format?'>base64_format?</span><span class='lparen'>(</span><span class='id identifier rubyid_base64_key'>base64_key</span> <span class='op'>=</span> <span class='id identifier rubyid_raw_key'>raw_key</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_base64_key'>base64_key</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>44</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_base64_key'>base64_key</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$</span><span class='regexp_end'>/</span></span>
@@ -761,21 +781,21 @@
       <pre class="lines">
 
 
-62
-63
-64
-65
-66
-67</pre>
+69
+70
+71
+72
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 69</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_calculate_public_key'>calculate_public_key</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:compressed</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:compressed</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>false</span>
   <span class='id identifier rubyid_group'>group</span> <span class='op'>=</span> <span class='id identifier rubyid_ec_key'>ec_key</span><span class='period'>.</span><span class='id identifier rubyid_group'>group</span>
   <span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_point_conversion_form'>point_conversion_form</span> <span class='op'>=</span> <span class='id identifier rubyid_opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:compressed</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='symbol'>:compressed</span> <span class='op'>:</span> <span class='symbol'>:uncompressed</span>
-  <span class='id identifier rubyid_point'>point</span> <span class='op'>=</span> <span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_generator'>generator</span><span class='period'>.</span><span class='id identifier rubyid_mul'>mul</span> <span class='id identifier rubyid_ec_key'>ec_key</span><span class='period'>.</span><span class='id identifier rubyid_private_key'>private_key</span>
+  <span class='id identifier rubyid_point'>point</span> <span class='op'>=</span> <span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_generator'>generator</span><span class='period'>.</span><span class='id identifier rubyid_mul'>mul</span> <span class='const'>OpenSSL</span><span class='op'>::</span><span class='const'>BN</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='int'>16</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -819,15 +839,55 @@
       <pre class="lines">
 
 
-102
-103
-104</pre>
+109
+110
+111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 109</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_compressed_wif_format?'>compressed_wif_format?</span>
   <span class='id identifier rubyid_wif_format?'>wif_format?</span><span class='lparen'>(</span><span class='symbol'>:compressed</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="data_sequence-instance_method">
+  
+    #<strong>data_sequence</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62
+63
+64
+65
+66
+67</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 60</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_data_sequence'>data_sequence</span>
+  <span class='const'>OpenSSL</span><span class='op'>::</span><span class='const'>ASN1</span><span class='op'>::</span><span class='const'>Sequence</span><span class='lparen'>(</span><span class='lbracket'>[</span>
+    <span class='const'>OpenSSL</span><span class='op'>::</span><span class='const'>ASN1</span><span class='op'>::</span><span class='const'>Integer</span><span class='lparen'>(</span><span class='int'>1</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='const'>OpenSSL</span><span class='op'>::</span><span class='const'>ASN1</span><span class='op'>::</span><span class='const'>OctetString</span><span class='lparen'>(</span><span class='const'>OpenSSL</span><span class='op'>::</span><span class='const'>BN</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='int'>16</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='const'>OpenSSL</span><span class='op'>::</span><span class='const'>ASN1</span><span class='op'>::</span><span class='const'>ObjectId</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Key.html#GROUP_NAME-constant" title="MoneyTree::Key::GROUP_NAME (constant)">GROUP_NAME</a></span></span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='symbol'>:EXPLICIT</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='const'>OpenSSL</span><span class='op'>::</span><span class='const'>ASN1</span><span class='op'>::</span><span class='const'>BitString</span><span class='lparen'>(</span><span class='id identifier rubyid_calculate_public_key'>calculate_public_key</span><span class='period'>.</span><span class='id identifier rubyid_to_octet_string'>to_octet_string</span><span class='lparen'>(</span><span class='symbol'>:uncompressed</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='int'>1</span><span class='comma'>,</span> <span class='symbol'>:EXPLICIT</span><span class='rparen'>)</span><span class='comma'>,</span>
+  <span class='rbracket'>]</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -871,13 +931,13 @@
       <pre class="lines">
 
 
-97
-98
-99
-100</pre>
+104
+105
+106
+107</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 104</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_base64'>from_base64</span><span class='lparen'>(</span><span class='id identifier rubyid_base64_key'>base64_key</span> <span class='op'>=</span> <span class='id identifier rubyid_raw_key'>raw_key</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Key/InvalidBase64Format.html" title="MoneyTree::Key::InvalidBase64Format (class)">InvalidBase64Format</a></span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_base64_format?'>base64_format?</span><span class='lparen'>(</span><span class='id identifier rubyid_base64_key'>base64_key</span><span class='rparen'>)</span>
@@ -903,12 +963,12 @@
       <pre class="lines">
 
 
-85
-86
-87</pre>
+92
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_hex'>from_hex</span><span class='lparen'>(</span><span class='id identifier rubyid_hex'>hex</span> <span class='op'>=</span> <span class='id identifier rubyid_raw_key'>raw_key</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_hex'>hex</span>
@@ -933,13 +993,13 @@
       <pre class="lines">
 
 
-80
-81
-82
-83</pre>
+87
+88
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 87</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_integer'>from_integer</span><span class='lparen'>(</span><span class='id identifier rubyid_bignum'>bignum</span> <span class='op'>=</span> <span class='id identifier rubyid_raw_key'>raw_key</span><span class='rparen'>)</span>
   <span class='comment'># TODO: does this need a byte size specification?
@@ -965,16 +1025,16 @@
       <pre class="lines">
 
 
-89
-90
-91
-92
-93
-94
-95</pre>
+96
+97
+98
+99
+100
+101
+102</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 89</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 96</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_wif'>from_wif</span><span class='lparen'>(</span><span class='id identifier rubyid_wif'>wif</span> <span class='op'>=</span> <span class='id identifier rubyid_raw_key'>raw_key</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_compressed'>compressed</span> <span class='op'>=</span> <span class='id identifier rubyid_wif'>wif</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>52</span>
@@ -1003,15 +1063,15 @@
       <pre class="lines">
 
 
+52
 53
-54
-55</pre>
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate'>generate</span>
-  <span class='id identifier rubyid_ec_key'>ec_key</span><span class='period'>.</span><span class='id identifier rubyid_generate_key'>generate_key</span>
+  <span class='ivar'>@ec_key</span> <span class='op'>=</span> <span class='const'>PKey</span><span class='op'>::</span><span class='const'>EC</span><span class='period'>.</span><span class='id identifier rubyid_generate'>generate</span> <span class='const'><span class='object_link'><a href="Key.html#GROUP_NAME-constant" title="MoneyTree::Key::GROUP_NAME (constant)">GROUP_NAME</a></span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1055,12 +1115,12 @@
       <pre class="lines">
 
 
-120
-121
-122</pre>
+127
+128
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 127</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hex_format?'>hex_format?</span>
   <span class='id identifier rubyid_raw_key'>raw_key</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>64</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_raw_key'>raw_key</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\H</span><span class='regexp_end'>/</span></span><span class='rbracket'>]</span>
@@ -1085,17 +1145,15 @@
       <pre class="lines">
 
 
+56
 57
-58
-59
-60</pre>
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_import'>import</span>
-  <span class='id identifier rubyid_ec_key'>ec_key</span><span class='period'>.</span><span class='id identifier rubyid_private_key'>private_key</span> <span class='op'>=</span> <span class='const'>BN</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='int'>16</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_set_public_key'>set_public_key</span>
+  <span class='ivar'>@ec_key</span> <span class='op'>=</span> <span class='const'>OpenSSL</span><span class='op'>::</span><span class='const'>PKey</span><span class='op'>::</span><span class='const'>EC</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data_sequence'>data_sequence</span><span class='period'>.</span><span class='id identifier rubyid_to_der'>to_der</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1117,15 +1175,15 @@
       <pre class="lines">
 
 
-73
-74
-75
-76
-77
-78</pre>
+80
+81
+82
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_raw_key'>parse_raw_key</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_raw_key'>raw_key</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Integer</span><span class='rparen'>)</span> <span class='kw'>then</span> <span class='id identifier rubyid_from_integer'>from_integer</span> <span class='kw'>elsif</span> <span class='id identifier rubyid_hex_format?'>hex_format?</span> <span class='kw'>then</span> <span class='id identifier rubyid_from_hex'>from_hex</span> <span class='kw'>elsif</span> <span class='id identifier rubyid_base64_format?'>base64_format?</span> <span class='kw'>then</span> <span class='id identifier rubyid_from_base64'>from_base64</span> <span class='kw'>elsif</span> <span class='id identifier rubyid_compressed_wif_format?'>compressed_wif_format?</span> <span class='kw'>then</span> <span class='id identifier rubyid_from_wif'>from_wif</span> <span class='kw'>elsif</span> <span class='id identifier rubyid_uncompressed_wif_format?'>uncompressed_wif_format?</span> <span class='kw'>then</span> <span class='id identifier rubyid_from_wif'>from_wif</span> <span class='kw'>else</span>
@@ -1153,12 +1211,12 @@
       <pre class="lines">
 
 
-69
-70
-71</pre>
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_public_key'>set_public_key</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_ec_key'>ec_key</span><span class='period'>.</span><span class='id identifier rubyid_public_key'>public_key</span> <span class='op'>=</span> <span class='id identifier rubyid_calculate_public_key'>calculate_public_key</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
@@ -1183,12 +1241,12 @@
       <pre class="lines">
 
 
-152
-153
-154</pre>
+159
+160
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 152</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 159</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_base64'>to_base64</span>
   <span class='id identifier rubyid_encode_base64'>encode_base64</span><span class='lparen'>(</span><span class='id identifier rubyid_to_hex'>to_hex</span><span class='rparen'>)</span>
@@ -1213,12 +1271,12 @@
       <pre class="lines">
 
 
-124
-125
-126</pre>
+131
+132
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 131</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_hex'>to_hex</span>
   <span class='id identifier rubyid_int_to_hex'>int_to_hex</span> <span class='ivar'>@ec_key</span><span class='period'>.</span><span class='id identifier rubyid_private_key'>private_key</span><span class='comma'>,</span> <span class='int'>64</span>
@@ -1243,12 +1301,12 @@
       <pre class="lines">
 
 
-156
-157
-158</pre>
+163
+164
+165</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 156</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 163</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span><span class='lparen'>(</span><span class='label'>network:</span> <span class='symbol'>:bitcoin</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_to_wif'>to_wif</span><span class='lparen'>(</span><span class='label'>network:</span> <span class='id identifier rubyid_network'>network</span><span class='rparen'>)</span>
@@ -1273,18 +1331,18 @@
       <pre class="lines">
 
 
-128
-129
-130
-131
-132
-133
-134
 135
-136</pre>
+136
+137
+138
+139
+140
+141
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 128</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 135</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_wif'>to_wif</span><span class='lparen'>(</span><span class='label'>compressed:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>network:</span> <span class='symbol'>:bitcoin</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_source'>source</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../MoneyTree.html#NETWORKS-constant" title="MoneyTree::NETWORKS (constant)">NETWORKS</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_network'>network</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:privkey_version</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_to_hex'>to_hex</span>
@@ -1337,12 +1395,12 @@
       <pre class="lines">
 
 
-106
-107
-108</pre>
+113
+114
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 106</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 113</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uncompressed_wif_format?'>uncompressed_wif_format?</span>
   <span class='id identifier rubyid_wif_format?'>wif_format?</span><span class='lparen'>(</span><span class='symbol'>:uncompressed</span><span class='rparen'>)</span>
@@ -1389,12 +1447,12 @@
       <pre class="lines">
 
 
-148
-149
-150</pre>
+155
+156
+157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 148</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 155</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate_wif'>validate_wif</span><span class='lparen'>(</span><span class='id identifier rubyid_wif'>wif</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Key/InvalidWIFFormat.html" title="MoneyTree::Key::InvalidWIFFormat (class)">InvalidWIFFormat</a></span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_wif_valid?'>wif_valid?</span><span class='lparen'>(</span><span class='id identifier rubyid_wif'>wif</span><span class='rparen'>)</span>
@@ -1441,14 +1499,14 @@
       <pre class="lines">
 
 
-110
-111
-112
-113
-114</pre>
+117
+118
+119
+120
+121</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 110</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_wif_format?'>wif_format?</span><span class='lparen'>(</span><span class='id identifier rubyid_compression'>compression</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_length'>length</span> <span class='op'>=</span> <span class='id identifier rubyid_compression'>compression</span> <span class='op'>==</span> <span class='symbol'>:compressed</span> <span class='op'>?</span> <span class='int'>52</span> <span class='op'>:</span> <span class='int'>51</span>
@@ -1497,18 +1555,18 @@
       <pre class="lines">
 
 
-138
-139
-140
-141
-142
-143
-144
 145
-146</pre>
+146
+147
+148
+149
+150
+151
+152
+153</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 138</span>
+      <pre class="code"><span class="info file"># File 'lib/money-tree/key.rb', line 145</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_wif_valid?'>wif_valid?</span><span class='lparen'>(</span><span class='id identifier rubyid_wif'>wif</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_hex'>hex</span> <span class='op'>=</span> <span class='id identifier rubyid_decode_base58'>decode_base58</span><span class='lparen'>(</span><span class='id identifier rubyid_wif'>wif</span><span class='rparen'>)</span>
@@ -1529,9 +1587,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 15 09:59:05 2022 by
+  Generated on Thu Jan  5 14:28:47 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-2.7.6).
+  0.9.28 (ruby-3.0.5).
 </div>
 
     </div>
